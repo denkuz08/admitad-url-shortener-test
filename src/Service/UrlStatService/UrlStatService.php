@@ -51,7 +51,7 @@ class UrlStatService
             case self::GROUP_BY_USER:
                 return $this->urlRepository->getCountUrlsGroupByUser($from, $to, $user);
             case self::GROUP_BY_DATE:
-                return $this->urlRepository->getCountUrlsGroupByDate($from, $to);
+                return $this->urlRepository->getCountUrlsGroupByDate($from, $to, $user);
         }
 
         $ex = new UnknownGroupByTypeException(sprintf('Unknown group by type: %s'.$groupBy));

@@ -42,7 +42,7 @@ class UrlRepository extends ServiceEntityRepository
         return $qb->getQuery()->getScalarResult();
     }
 
-    public function getCountUrlsGroupByDate(\DateTimeInterface $from, \DateTimeInterface $to): iterable
+    public function getCountUrlsGroupByDate(\DateTimeInterface $from, \DateTimeInterface $to, User $user = null): iterable
     {
         $qb = $this->createQueryBuilder('url');
 
@@ -53,6 +53,11 @@ class UrlRepository extends ServiceEntityRepository
             ->groupBy('url.createdAt');
 
         $qb->setParameters([':from' => $from, ':to' => $to]);
+
+        if ($user) {
+            $qb->andWhere('url.createdUser = :user');
+            $qb->setParameter(':user', $user);
+        }
 
         return $qb->getQuery()->getScalarResult();
     }
