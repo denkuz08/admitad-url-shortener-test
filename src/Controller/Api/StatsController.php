@@ -61,8 +61,8 @@ class StatsController extends AbstractFOSRestController
         $dateTo = $dateToFilter ? new \DateTimeImmutable($dateToFilter) : null;
         $user = $userIdFilter ? $this->getUserById($userIdFilter) : null;
 
-        $dateTo ??= $dateFrom;
         $dateFrom ??= $dateTo;
+        $dateTo ??= new \DateTimeImmutable(UrlStatService::DEFAULT_END_DATE);
 
         return $this->urlStatService->getStat($dateFrom, $dateTo, $user, $groupByFilter);
     }
