@@ -13,9 +13,12 @@ class UrlStatService
 
     public const GROUP_BY_USER = 'user';
     public const GROUP_BY_DATE = 'date';
+    public const GROUP_BY_USER_DATE = 'user_date';
+
     public const POSSIBLE_GROUP_BY = [
         self::GROUP_BY_DATE,
         self::GROUP_BY_USER,
+        self::GROUP_BY_USER_DATE,
     ];
 
     private UrlRepository $urlRepository;
@@ -31,10 +34,6 @@ class UrlStatService
         ?User $user = null,
         ?string $groupBy = self::GROUP_BY_USER
     ): iterable {
-        if (!\in_array($groupBy, self::POSSIBLE_GROUP_BY)) {
-            $groupBy = self::GROUP_BY_USER;
-        }
-
         if (!$from) {
             $from = new \DateTimeImmutable(self::DEFAULT_START_DATE);
         }
@@ -47,11 +46,20 @@ class UrlStatService
             [$from, $to] = [$to, $from];
         }
 
+        return $this->urlRepository->getCountUrlsStat($from, $to, $user, $this->buildGroupByMask($groupBy));
+    }
+
+    protected function buildGroupByMask(string $groupBy): int
+    {
         switch ($groupBy) {
-            case self::GROUP_BY_USER:
-                return $this->urlRepository->getCountUrlsGroupByUser($from, $to, $user);
+            case self::GROUP_BY_USER_DATE:
+                return UrlRepository::GROUP_BY_DATE | UrlRepository::GROUP_BY_USER;
+
             case self::GROUP_BY_DATE:
-                return $this->urlRepository->getCountUrlsGroupByDate($from, $to, $user);
+                return UrlRepository::GROUP_BY_DATE;
+
+            case self::GROUP_BY_USER:
+                return UrlRepository::GROUP_BY_USER;
         }
 
         $ex = new UnknownGroupByTypeException(sprintf('Unknown group by type: %s'.$groupBy));
