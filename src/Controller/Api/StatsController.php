@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Controller\Api\Exception\UserNotFoundException;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\UrlStatService\UrlStatService;
@@ -81,7 +82,7 @@ class StatsController extends AbstractFOSRestController
     {
         $user = $this->userRepository->find($id);
         if (!$user) {
-            throw new NotFoundHttpException('User not found');
+            throw new UserNotFoundException(\sprintf('User with id %s not found', $id));
         }
 
         return $user;
