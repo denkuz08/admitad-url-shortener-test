@@ -11,10 +11,6 @@
 - Будут созданы таблицы user и url
 - Будет добавлено два пользователя в таблицу user:
 
-**login** | **api_token**
-test_user1 | 12c1480dcaa94584ed5ef87ff8ecb855
-test_user2 | c0fea7aaf4d6d1243f584c003ad5b1d3
-
 | login | api_token |
 | --- | --- |
 | test_user1 | 12c1480dcaa94584ed5ef87ff8ecb855 |
