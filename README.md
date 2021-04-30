@@ -15,9 +15,18 @@
 test_user1 | 12c1480dcaa94584ed5ef87ff8ecb855
 test_user2 | c0fea7aaf4d6d1243f584c003ad5b1d3
 
+| login | api_token |
+| --- | --- |
+| test_user1 | 12c1480dcaa94584ed5ef87ff8ecb855 |
+| test_user2 | c0fea7aaf4d6d1243f584c003ad5b1d3 |
+
+
 - Будет добавлена одна ссылка в таблицу url:
-**created_user_id** | **url** | **short_code** | **created_at**
-1|https://google.com/|ggl|2021-04-29
+
+| created_user_id | url | short_code | created_at |
+| --- | --- | --- | --- |
+| 1 | https://google.com/ | ggl | 2021-04-29 |
+
 
 ## API:
 
@@ -59,6 +68,8 @@ test_user2 | c0fea7aaf4d6d1243f584c003ad5b1d3
 
 Происходит по адресу `/u/{short_code}` (где {short_code} это сгенерированный короткий код ссылки)
 
+Например, после развертывания приложения, можно будет перейти на `/u/ggl`, произойдет редирект на https://google.com/
+
 ---
 
-Переход по ссылкам, не предусмотренным в приложении должен приводить к редиректу на главную
+Переход по ссылкам, не предусмотренным в приложении, должен приводить к редиректу на главную
